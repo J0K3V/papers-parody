@@ -1,0 +1,331 @@
+{
+  "images": {
+    "default": [
+      {
+        "id": "assets/images/default/Arrested.png",
+        "name": "Arrested",
+        "url": "assets/images/default/Arrested.png"
+      },
+      {
+        "id": "assets/images/default/Arstotzka.png",
+        "name": "Arstotzka",
+        "url": "assets/images/default/Arstotzka.png"
+      },
+      {
+        "id": "assets/images/default/EndNews.png",
+        "name": "EndNews",
+        "url": "assets/images/default/EndNews.png"
+      },
+      {
+        "id": "assets/images/default/EzicCelebrate.png",
+        "name": "EzicCelebrate",
+        "url": "assets/images/default/EzicCelebrate.png"
+      },
+      {
+        "id": "assets/images/default/EzicNote.png",
+        "name": "EzicNote",
+        "url": "assets/images/default/EzicNote.png"
+      },
+      {
+        "id": "assets/images/default/FamilyDead.png",
+        "name": "FamilyDead",
+        "url": "assets/images/default/FamilyDead.png"
+      },
+      {
+        "id": "assets/images/default/FamilyPhoto.png",
+        "name": "FamilyPhoto",
+        "url": "assets/images/default/FamilyPhoto.png"
+      },
+      {
+        "id": "assets/images/default/Interrogation.png",
+        "name": "Interrogation",
+        "url": "assets/images/default/Interrogation.png"
+      },
+      {
+        "id": "assets/images/default/JailDoor.png",
+        "name": "JailDoor",
+        "url": "assets/images/default/JailDoor.png"
+      },
+      {
+        "id": "assets/images/default/JailFar.png",
+        "name": "JailFar",
+        "url": "assets/images/default/JailFar.png"
+      },
+      {
+        "id": "assets/images/default/JailNear.png",
+        "name": "JailNear",
+        "url": "assets/images/default/JailNear.png"
+      },
+      {
+        "id": "assets/images/default/JailNote.png",
+        "name": "JailNote",
+        "url": "assets/images/default/JailNote.png"
+      },
+      {
+        "id": "assets/images/default/LargeFamily.png",
+        "name": "LargeFamily",
+        "url": "assets/images/default/LargeFamily.png"
+      },
+      {
+        "id": "assets/images/default/NightTrain.png",
+        "name": "NightTrain",
+        "url": "assets/images/default/NightTrain.png"
+      },
+      {
+        "id": "assets/images/default/Obrinspector.png",
+        "name": "Obrinspector",
+        "url": "assets/images/default/Obrinspector.png"
+      },
+      {
+        "id": "assets/images/default/Obristan.png",
+        "name": "Obristan",
+        "url": "assets/images/default/Obristan.png"
+      },
+      {
+        "id": "assets/images/default/Passport1.png",
+        "name": "Passport1",
+        "url": "assets/images/default/Passport1.png"
+      },
+      {
+        "id": "assets/images/default/Passport2.png",
+        "name": "Passport2",
+        "url": "assets/images/default/Passport2.png"
+      },
+      {
+        "id": "assets/images/default/Passport3.png",
+        "name": "Passport3",
+        "url": "assets/images/default/Passport3.png"
+      },
+      {
+        "id": "assets/images/default/Passport4.png",
+        "name": "Passport4",
+        "url": "assets/images/default/Passport4.png"
+      },
+      {
+        "id": "assets/images/default/Passport5.png",
+        "name": "Passport5",
+        "url": "assets/images/default/Passport5.png"
+      },
+      {
+        "id": "assets/images/default/Passport6.png",
+        "name": "Passport6",
+        "url": "assets/images/default/Passport6.png"
+      },
+      {
+        "id": "assets/images/default/Shutter.png",
+        "name": "Shutter",
+        "url": "assets/images/default/Shutter.png"
+      },
+      {
+        "id": "assets/images/default/WaitingLine.png",
+        "name": "WaitingLine",
+        "url": "assets/images/default/WaitingLine.png"
+      }
+    ],
+    "custom": [],
+    "sprites": [
+      {
+        "id": "assets/images/sprites/BoothWall.png",
+        "name": "BoothWall",
+        "url": "assets/images/sprites/BoothWall.png"
+      },
+      {
+        "id": "assets/images/sprites/BudgetLineCheck.png",
+        "name": "BudgetLineCheck",
+        "url": "assets/images/sprites/BudgetLineCheck.png"
+      },
+      {
+        "id": "assets/images/sprites/CursorArrow.png",
+        "name": "CursorArrow",
+        "url": "assets/images/sprites/CursorArrow.png"
+      },
+      {
+        "id": "assets/images/sprites/CursorHand.png",
+        "name": "CursorHand",
+        "url": "assets/images/sprites/CursorHand.png"
+      },
+      {
+        "id": "assets/images/sprites/LoadDelete.png",
+        "name": "LoadDelete",
+        "url": "assets/images/sprites/LoadDelete.png"
+      },
+      {
+        "id": "assets/images/sprites/NextButton.png",
+        "name": "NextButton",
+        "url": "assets/images/sprites/NextButton.png"
+      },
+      {
+        "id": "assets/images/sprites/QuitButton.png",
+        "name": "QuitButton",
+        "url": "assets/images/sprites/QuitButton.png"
+      },
+      {
+        "id": "assets/images/sprites/Shutter.png",
+        "name": "Shutter",
+        "url": "assets/images/sprites/Shutter.png"
+      },
+      {
+        "id": "assets/images/sprites/ShutterSwitchDown.png",
+        "name": "ShutterSwitchDown",
+        "url": "assets/images/sprites/ShutterSwitchDown.png"
+      },
+      {
+        "id": "assets/images/sprites/ShutterSwitchUp.png",
+        "name": "ShutterSwitchUp",
+        "url": "assets/images/sprites/ShutterSwitchUp.png"
+      }
+    ]
+  },
+  "sounds": {
+    "default": [
+      {
+        "id": "assets/sounds/default/BadEnding.mp3",
+        "name": "BadEnding",
+        "url": "assets/sounds/default/BadEnding.mp3",
+        "bytes": 3047776
+      },
+      {
+        "id": "assets/sounds/default/BorderAlarm.wav",
+        "name": "BorderAlarm",
+        "url": "assets/sounds/default/BorderAlarm.wav",
+        "bytes": 301646
+      },
+      {
+        "id": "assets/sounds/default/BorderCallguards.wav",
+        "name": "BorderCallguards",
+        "url": "assets/sounds/default/BorderCallguards.wav",
+        "bytes": 353102
+      },
+      {
+        "id": "assets/sounds/default/ButtonUp.wav",
+        "name": "ButtonUp",
+        "url": "assets/sounds/default/ButtonUp.wav",
+        "bytes": 17998
+      },
+      {
+        "id": "assets/sounds/default/GoodEnding.mp3",
+        "name": "GoodEnding",
+        "url": "assets/sounds/default/GoodEnding.mp3",
+        "bytes": 4781753
+      },
+      {
+        "id": "assets/sounds/default/MainTheme.mp3",
+        "name": "MainTheme",
+        "url": "assets/sounds/default/MainTheme.mp3",
+        "bytes": 3489397
+      },
+      {
+        "id": "assets/sounds/default/PaperSpit.wav",
+        "name": "PaperSpit",
+        "url": "assets/sounds/default/PaperSpit.wav",
+        "bytes": 124682
+      },
+      {
+        "id": "assets/sounds/default/PaperTurnpage0.wav",
+        "name": "PaperTurnpage0",
+        "url": "assets/sounds/default/PaperTurnpage0.wav",
+        "bytes": 83210
+      },
+      {
+        "id": "assets/sounds/default/PaperTurnpage1.wav",
+        "name": "PaperTurnpage1",
+        "url": "assets/sounds/default/PaperTurnpage1.wav",
+        "bytes": 60170
+      },
+      {
+        "id": "assets/sounds/default/PaperTurnpage2.wav",
+        "name": "PaperTurnpage2",
+        "url": "assets/sounds/default/PaperTurnpage2.wav",
+        "bytes": 55562
+      },
+      {
+        "id": "assets/sounds/default/ShutterDrop.wav",
+        "name": "ShutterDrop",
+        "url": "assets/sounds/default/ShutterDrop.wav",
+        "bytes": 278862
+      },
+      {
+        "id": "assets/sounds/default/ShutterRise.wav",
+        "name": "ShutterRise",
+        "url": "assets/sounds/default/ShutterRise.wav",
+        "bytes": 249098
+      },
+      {
+        "id": "assets/sounds/default/SpeechOut.wav",
+        "name": "SpeechOut",
+        "url": "assets/sounds/default/SpeechOut.wav",
+        "bytes": 201550
+      },
+      {
+        "id": "assets/sounds/default/TextReveal0.wav",
+        "name": "TextReveal0",
+        "url": "assets/sounds/default/TextReveal0.wav",
+        "bytes": 43854
+      },
+      {
+        "id": "assets/sounds/default/TextReveal1.wav",
+        "name": "TextReveal1",
+        "url": "assets/sounds/default/TextReveal1.wav",
+        "bytes": 36686
+      },
+      {
+        "id": "assets/sounds/default/TextReveal2.wav",
+        "name": "TextReveal2",
+        "url": "assets/sounds/default/TextReveal2.wav",
+        "bytes": 39502
+      },
+      {
+        "id": "assets/sounds/default/TextReveal3.wav",
+        "name": "TextReveal3",
+        "url": "assets/sounds/default/TextReveal3.wav",
+        "bytes": 31822
+      }
+    ],
+    "custom": []
+  },
+  "packs": {
+    "bad ending": {
+      "music": [
+        "BadEnding.mp3"
+      ],
+      "next": [
+        "ButtonUp.wav"
+      ],
+      "letter": [
+        "TextReveal0.wav",
+        "TextReveal1.wav",
+        "TextReveal2.wav",
+        "TextReveal3.wav"
+      ]
+    },
+    "good ending": {
+      "music": [
+        "GoodEnding.mp3"
+      ],
+      "next": [
+        "ButtonUp.wav"
+      ],
+      "letter": [
+        "TextReveal0.wav",
+        "TextReveal1.wav",
+        "TextReveal2.wav",
+        "TextReveal3.wav"
+      ]
+    },
+    "main theme": {
+      "music": [
+        "MainTheme.mp3"
+      ],
+      "next": [
+        "ButtonUp.wav"
+      ],
+      "letter": [
+        "TextReveal0.wav",
+        "TextReveal1.wav",
+        "TextReveal2.wav",
+        "TextReveal3.wav"
+      ]
+    }
+  },
+  "font": "assets/fonts/pixelplay.ttf"
+}

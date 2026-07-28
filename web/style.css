@@ -1,0 +1,685 @@
+/*
+ * Parody, Please - web editor.
+ * Washed out military greens, amber labels, one red for anything final.
+ */
+
+@font-face {
+  font-family: 'PixelPlay';
+  src: url('../assets/fonts/pixelplay.woff2') format('woff2'),
+       url('../assets/fonts/pixelplay.ttf') format('truetype');
+  font-display: block;
+}
+
+:root {
+  --background: #1a201e;
+  --panel: #232b28;
+  --card: #2c3733;
+  --card-selected: #3d5147;
+  --edge: #111614;
+  --ink: #d8d3c2;
+  --ink-dim: #8c9490;
+  --red: #a3352f;
+  --red-hover: #c04039;
+  --maroon: #6b2b28;
+  --amber: #c9a227;
+  --green: #4a6b52;
+  --mono: 'Consolas', 'DejaVu Sans Mono', monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 14px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ------------------------------------------------------------------ header */
+
+header {
+  background: var(--panel);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--edge);
+  flex: 0 0 auto;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 20px;
+  letter-spacing: 1px;
+  color: var(--amber);
+}
+
+header .subtitle {
+  color: var(--ink-dim);
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+header .spacer {
+  flex: 1;
+}
+
+/* ------------------------------------------------------------------ layout */
+
+main {
+  flex: 1;
+  display: flex;
+  gap: 12px;
+  padding: 12px 14px;
+  min-height: 0;
+}
+
+#scene-column {
+  background: var(--panel);
+  width: 320px;
+  flex: 0 0 320px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+#scene-column .column-head {
+  display: flex;
+  align-items: center;
+  padding: 14px 14px 8px;
+}
+
+#scene-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 10px;
+  min-height: 0;
+}
+
+#stage-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  min-height: 0;
+}
+
+#stage-panel {
+  background: var(--panel);
+  padding: 12px 14px 14px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+#inspector,
+#options {
+  background: var(--panel);
+  padding: 12px 14px;
+  flex: 0 0 auto;
+}
+
+/* ------------------------------------------------------------------- stage */
+
+/*
+ * The screen sits inside the booth. The wall is one piece of scenery drawn
+ * once as a frame a little larger than the video - not tiled across the whole
+ * panel - which is exactly how the desktop editor draws it.
+ */
+.stage-area {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  min-height: 0;
+  min-width: 0;
+}
+
+/*
+ * The three volume sliders beside the booth: everything, the score, the
+ * effects - same strip as the desktop editor. They shape what the speakers
+ * do, never what RECORD writes.
+ */
+#volume-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 128px;
+  flex: 0 0 auto;
+}
+
+#volume-panel .vol-name {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--ink-dim);
+  margin-bottom: 2px;
+}
+
+#volume-panel input[type='range'] {
+  width: 100%;
+  margin: 0;
+  accent-color: var(--amber);
+  cursor: pointer;
+}
+
+#booth {
+  position: relative;
+  display: inline-flex;
+  background: url('../assets/images/sprites/BoothWall.png') no-repeat center / 100% 100%;
+  image-rendering: pixelated;
+  padding: clamp(12px, 2.2vw, 30px);
+  overflow: hidden;
+  max-width: 100%;
+}
+
+/*
+ * The canvas keeps its own 16:9. Forcing width to 100% while capping the
+ * height is what squashed the picture flat: the box obeyed both and the frame
+ * inside stretched to fill it.
+ */
+#stage {
+  background: #000;
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  /*
+   * Everything that is not the stage - header, inspector, footer, transport
+   * and the booth's own frame - adds up to roughly 550px. What is left is the
+   * stage's, so the booth fills its panel without spilling into the others.
+   */
+  max-height: max(220px, calc(100vh - 550px));
+  aspect-ratio: 16 / 9;
+  cursor: url('../assets/images/sprites/CursorArrow.png') 2 2, default;
+}
+
+#stage.over-next {
+  cursor: url('../assets/images/sprites/CursorHand.png') 7 1, pointer;
+}
+
+/* Fullscreen shows the report and nothing else, the way the game does. */
+#booth:fullscreen {
+  padding: 0;
+  background: #000;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+#booth:fullscreen #stage {
+  max-height: 100vh;
+  max-width: 100vw;
+  width: auto;
+  height: auto;
+}
+
+#booth:fullscreen #lever {
+  display: none;
+}
+
+/* The way out, tucked in the corner like a video player's. */
+#fs-close {
+  display: none;
+  position: absolute;
+  top: 24px;
+  right: 28px;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.45);
+  color: #fff;
+  font-size: 20px;
+  line-height: 1;
+  opacity: 0.5;
+  z-index: 5;
+}
+
+#booth:fullscreen #fs-close {
+  display: block;
+}
+
+#fs-close:hover {
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.65);
+}
+
+/* The shutter rolls down over the whole booth, drawn once like the wall. */
+#shutter {
+  position: absolute;
+  inset: 0;
+  background: url('../assets/images/sprites/Shutter.png') no-repeat center / 100% 100%;
+  image-rendering: pixelated;
+  transform: translateY(-100%);
+  transition: transform 0.42s cubic-bezier(0.55, 0, 0.85, 0.4);
+  pointer-events: none;
+  z-index: 3;
+}
+
+#booth.closed #shutter {
+  transform: translateY(0);
+}
+
+/*
+ * The handle, bolted to the top right of the booth. It hangs in front of the
+ * bars - a higher layer than the shutter - so it stays reachable once they are
+ * down, the same as it does in the game.
+ */
+#lever {
+  position: absolute;
+  top: 2.5%;
+  right: 0;
+  width: 9%;
+  aspect-ratio: 28 / 23;
+  min-width: 34px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: url('../assets/images/sprites/ShutterSwitchUp.png') no-repeat center / 100% 100%;
+  image-rendering: pixelated;
+  filter: brightness(0.85);
+  cursor: pointer;
+  z-index: 4;
+}
+
+#booth.closed #lever {
+  background-image: url('../assets/images/sprites/ShutterSwitchDown.png');
+}
+
+#lever:hover {
+  filter: brightness(1);
+  background-color: transparent;
+}
+
+#booth.opening #shutter {
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.4, 1);
+}
+
+#transport {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+#timecode {
+  color: var(--ink-dim);
+  font-size: 12px;
+  margin-left: auto;
+}
+
+progress {
+  width: 100%;
+  height: 8px;
+  margin-top: 8px;
+  accent-color: var(--amber);
+  background: var(--edge);
+  border: none;
+}
+
+progress::-webkit-progress-bar {
+  background: var(--edge);
+}
+
+progress::-webkit-progress-value {
+  background: var(--amber);
+}
+
+/* ------------------------------------------------------------------ labels */
+
+.label {
+  color: var(--amber);
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.dim {
+  color: var(--ink-dim);
+  font-size: 12px;
+}
+
+/* ----------------------------------------------------------------- buttons */
+
+button {
+  background: var(--card);
+  color: var(--ink);
+  border: none;
+  font-family: var(--mono);
+  font-size: 13px;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: background 0.12s ease;
+}
+
+button:hover:not(:disabled) {
+  background: var(--red-hover);
+  color: #fff;
+}
+
+button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+button.primary {
+  background: var(--red);
+}
+
+button.danger {
+  background: var(--maroon);
+}
+
+button.ghost {
+  background: transparent;
+  border: 1px solid var(--card);
+}
+
+button.active {
+  background: var(--card-selected);
+}
+
+button.align {
+  padding: 6px 10px;
+  font-size: 15px;
+  line-height: 1;
+}
+
+button.wide {
+  width: 100%;
+  padding: 12px;
+  letter-spacing: 1px;
+}
+
+/* The pair that nudge a scene's sound delay half a second at a time. */
+button.tiny {
+  padding: 2px 8px;
+  font-size: 14px;
+  line-height: 1.2;
+  min-width: 24px;
+}
+
+#sound-when-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#sound-delay-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+#sound-when-group[hidden],
+#sound-delay-group[hidden] {
+  display: none;
+}
+
+/* ------------------------------------------------------------------- cards */
+
+.scene-card {
+  display: flex;
+  gap: 8px;
+  background: var(--card);
+  border: 1px solid var(--edge);
+  margin-bottom: 6px;
+  padding: 6px;
+  cursor: pointer;
+  align-items: center;
+}
+
+.scene-card.selected {
+  background: var(--card-selected);
+}
+
+.scene-card img {
+  width: 84px;
+  height: 56px;
+  object-fit: contain;
+  background: #101412;
+  flex: 0 0 84px;
+}
+
+.scene-card .body {
+  min-width: 0;
+  flex: 1;
+}
+
+.scene-card .index {
+  color: var(--amber);
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.scene-card .caption {
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.scene-card .cue {
+  color: var(--amber);
+  font-size: 10px;
+}
+
+.empty-hint {
+  color: var(--ink-dim);
+  text-align: center;
+  padding: 40px 10px;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+/* --------------------------------------------------------------- inspector */
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+textarea {
+  width: 100%;
+  background: var(--card);
+  color: var(--ink);
+  border: none;
+  font-family: var(--mono);
+  font-size: 15px;
+  padding: 10px;
+  resize: vertical;
+  min-height: 68px;
+}
+
+textarea:focus,
+select:focus,
+input:focus {
+  outline: 1px solid var(--amber);
+}
+
+select,
+input[type='text'] {
+  background: var(--card);
+  color: var(--ink);
+  border: none;
+  font-family: var(--mono);
+  font-size: 13px;
+  padding: 6px 8px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.field > span {
+  color: var(--ink-dim);
+  font-size: 10px;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--ink);
+  cursor: pointer;
+  align-self: flex-end;
+  padding-bottom: 6px;
+}
+
+.checkbox input {
+  accent-color: var(--amber);
+  cursor: pointer;
+}
+
+/* The game's own pointer, over the stage. The hotspot is the arrow's tip. */
+#stage {
+  cursor: url('../assets/images/sprites/CursorArrow.png') 2 2, default;
+}
+
+/* Over the NEXT button it becomes the hand, hotspot on the fingertip. */
+#stage.over-next {
+  cursor: url('../assets/images/sprites/CursorHand.png') 7 1, pointer;
+}
+
+/* ------------------------------------------------------------------ modals */
+
+dialog {
+  background: var(--background);
+  color: var(--ink);
+  border: 1px solid var(--edge);
+  padding: 0;
+  width: min(760px, 92vw);
+  max-height: 86vh;
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.72);
+}
+
+dialog .modal-head,
+dialog .modal-foot {
+  background: var(--panel);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+dialog .modal-body {
+  padding: 12px 16px;
+  overflow-y: auto;
+  max-height: 60vh;
+}
+
+.tile-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 8px;
+}
+
+.tile {
+  background: var(--card);
+  border: 1px solid var(--edge);
+  padding: 6px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.tile:hover {
+  background: var(--card-selected);
+}
+
+.tile img {
+  width: 100%;
+  height: 92px;
+  object-fit: contain;
+  background: #101412;
+  display: block;
+}
+
+.tile .name {
+  font-size: 11px;
+  margin-top: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tile .remove {
+  font-size: 10px;
+  color: var(--ink-dim);
+  margin-top: 2px;
+}
+
+.sound-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--card);
+  border: 1px solid var(--edge);
+  padding: 8px;
+  margin-bottom: 4px;
+  cursor: pointer;
+}
+
+.sound-row.selected {
+  background: var(--card-selected);
+}
+
+.sound-row .name {
+  flex: 1;
+}
+
+/* ------------------------------------------------------------------ toasts */
+
+#toast {
+  position: fixed;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--panel);
+  border: 1px solid var(--amber);
+  color: var(--ink);
+  padding: 10px 18px;
+  font-size: 13px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 50;
+}
+
+#toast.show {
+  opacity: 1;
+}
+
+/* ----------------------------------------------------------------- responsive */
+
+@media (max-width: 900px) {
+  main {
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  #scene-column {
+    width: 100%;
+    flex: 0 0 auto;
+    max-height: 260px;
+  }
+}

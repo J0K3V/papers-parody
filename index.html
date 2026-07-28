@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Parody, Please</title>
+  <meta name="description" content="Build your own Papers Please style ending: pick the pictures, write the report, play it back and record it.">
+  <link rel="icon" href="assets/favicon.png">
+  <link rel="stylesheet" href="web/style.css">
+  <link rel="modulepreload" href="web/app.js">
+  <link rel="modulepreload" href="web/engine.js">
+  <link rel="modulepreload" href="web/storage.js">
+  <link rel="preload" as="font" type="font/woff2" href="assets/fonts/pixelplay.woff2" crossorigin>
+</head>
+<body>
+
+  <header>
+    <div>
+      <h1>PARODY, PLEASE</h1>
+      <div class="subtitle">scene editor</div>
+    </div>
+    <div class="spacer"></div>
+    <button id="btn-new">New</button>
+    <button id="btn-open">Open</button>
+    <button id="btn-save">Save</button>
+    <button id="btn-saveas">Save as</button>
+  </header>
+
+  <main>
+    <section id="scene-column">
+      <div class="column-head">
+        <span class="label">SCENES</span>
+        <div class="spacer" style="flex:1"></div>
+        <span class="dim" id="scene-count">0</span>
+      </div>
+      <div id="scene-list"></div>
+      <div style="padding:10px 14px 14px">
+        <button id="btn-add-scene" class="primary wide">+ ADD SCENE</button>
+      </div>
+    </section>
+
+    <section id="stage-column">
+      <div id="stage-panel">
+        <span class="label">STAGE</span>
+        <div class="stage-area">
+          <div id="booth">
+            <canvas id="stage" width="1280" height="720"></canvas>
+            <div id="shutter"></div>
+            <button id="lever" title="Pull the shutter down, or lift it again"></button>
+            <button id="fs-close" title="Leave fullscreen">✕</button>
+          </div>
+          <div id="volume-panel">
+            <span class="label">VOLUME</span>
+            <div class="vol-row">
+              <div class="vol-name"><span>master</span><span id="vol-master-pct" class="dim">100%</span></div>
+              <input type="range" id="vol-master" min="0" max="100" value="100" title="Everything at once">
+            </div>
+            <div class="vol-row">
+              <div class="vol-name"><span>music</span><span id="vol-music-pct" class="dim">100%</span></div>
+              <input type="range" id="vol-music" min="0" max="100" value="100" title="The soundtrack">
+            </div>
+            <div class="vol-row">
+              <div class="vol-name"><span>effects</span><span id="vol-effects-pct" class="dim">100%</span></div>
+              <input type="range" id="vol-effects" min="0" max="100" value="100" title="Typing, page turns, scene sounds, the shutter">
+            </div>
+          </div>
+        </div>
+        <div id="transport">
+          <button id="btn-play" class="primary">PLAY</button>
+          <button id="btn-pause" disabled>PAUSE</button>
+          <button id="btn-stop" disabled>STOP</button>
+          <button id="btn-fullscreen">FULLSCREEN</button>
+          <div style="flex:1"></div>
+          <span id="timecode" class="dim">0:00 / 0:00</span>
+        </div>
+        <progress id="progress" value="0" max="1"></progress>
+      </div>
+
+      <div id="inspector">
+        <div class="row">
+          <span class="label">PICTURE</span>
+          <span id="picture-name" class="dim">-</span>
+          <button id="btn-change-picture">Change</button>
+          <div style="flex:1"></div>
+          <span class="label">SOUND</span>
+          <span id="sound-name" class="dim">none</span>
+          <span id="sound-when-group" hidden>
+            <select id="opt-sound-when" title="When this scene's sound plays">
+              <option value="start" selected>on entry</option>
+              <option value="typed">when typed</option>
+              <option value="end">at end</option>
+              <option value="delayed">after</option>
+            </select>
+            <span id="sound-delay-group" hidden>
+              <button id="sound-delay-less" class="tiny">-</button>
+              <span id="sound-delay-value" class="dim">0.0s</span>
+              <button id="sound-delay-more" class="tiny">+</button>
+            </span>
+          </span>
+          <button id="btn-preview-sound" disabled title="Listen">▶</button>
+          <button id="btn-change-sound">Choose</button>
+        </div>
+        <div class="row">
+          <span class="label">MUSIC</span>
+          <span id="music-name" class="dim">carries on</span>
+          <button id="btn-change-music">Change</button>
+          <span class="dim">a track set here plays on into the next scenes</span>
+          <div style="flex:1"></div>
+        </div>
+        <div class="row">
+          <span class="label">SCENE TEXT</span>
+          <button id="align-left" class="align">left</button>
+          <button id="align-center" class="align">centre</button>
+          <button id="align-right" class="align">right</button>
+          <div style="flex:1"></div>
+          <button id="btn-up">Up</button>
+          <button id="btn-down">Down</button>
+          <button id="btn-duplicate">Duplicate</button>
+          <button id="btn-delete" class="danger">Delete</button>
+        </div>
+        <div class="row" style="display:block">
+          <textarea id="scene-text" placeholder="Type the line this scene shows..."></textarea>
+        </div>
+      </div>
+
+      <div id="options">
+        <div class="row">
+          <label class="field">
+            <span>Soundtrack</span>
+            <select id="opt-soundtrack">
+              <option value="bad ending" selected>bad ending</option>
+              <option value="good ending">good ending</option>
+              <option value="main theme">main theme</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Picture fit</span>
+            <select id="opt-fit">
+              <option value="contain">contain</option>
+              <option value="stretch">stretch</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Typing</span>
+            <select id="opt-typing">
+              <option value="slow">slow</option>
+              <option value="normal" selected>normal</option>
+              <option value="fast">fast</option>
+            </select>
+          </label>
+          <label class="field" style="flex:1">
+            <span>Save video as</span>
+            <input type="text" id="opt-output" value="my-parody.webm" spellcheck="false">
+          </label>
+          <label class="checkbox" title="Off: press NEXT yourself, the way the game plays">
+            <input type="checkbox" id="opt-movie-mode" checked>
+            <span>Movie mode</span>
+          </label>
+          <button id="btn-record" class="primary" title="Plays the report through and saves it as a video">RECORD VIDEO</button>
+        </div>
+        <div class="row">
+          <span class="dim" id="storage-note"></span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Picture picker -->
+  <dialog id="picture-dialog">
+    <div class="modal-head">
+      <span class="label">CHOOSE A PICTURE</span>
+      <div style="flex:1"></div>
+      <button id="tab-game" class="active">GAME FRAMES</button>
+      <button id="tab-mine">MY ARTWORK</button>
+      <button id="tab-imported">IMPORTED</button>
+    </div>
+    <div class="modal-body">
+      <div id="picture-grid" class="tile-grid"></div>
+    </div>
+    <div class="modal-foot">
+      <input type="file" id="picture-file" accept="image/*" multiple hidden>
+      <button id="btn-import-picture">IMPORT PICTURES...</button>
+      <div style="flex:1"></div>
+      <button id="picture-cancel">Cancel</button>
+    </div>
+  </dialog>
+
+  <!-- Sound picker -->
+  <dialog id="sound-dialog">
+    <div class="modal-head">
+      <span class="label" id="sound-dialog-title">A SOUND FOR THIS SCENE</span>
+      <span class="dim" id="sound-dialog-note">plays once, where you tell it to</span>
+    </div>
+    <div class="modal-body">
+      <div id="sound-list"></div>
+    </div>
+    <div class="modal-foot">
+      <input type="file" id="sound-file" accept="audio/*" multiple hidden>
+      <button id="btn-import-sound">IMPORT SOUNDS...</button>
+      <span id="preview-transport" hidden>
+        <button id="preview-pause">PAUSE</button>
+        <button id="preview-stop" class="danger">STOP</button>
+      </span>
+      <div style="flex:1"></div>
+      <button id="sound-cancel">Cancel</button>
+    </div>
+  </dialog>
+
+  <!-- Saved reports -->
+  <dialog id="projects-dialog">
+    <div class="modal-head">
+      <span class="label">OPEN A REPORT</span>
+      <span class="dim">kept in this browser</span>
+    </div>
+    <div class="modal-body">
+      <div id="project-list"></div>
+    </div>
+    <div class="modal-foot">
+      <button id="btn-import-project">OPEN A .JSON FILE...</button>
+      <div style="flex:1"></div>
+      <button id="projects-close">Close</button>
+    </div>
+  </dialog>
+
+  <input type="file" id="project-file" accept="application/json" hidden>
+  <div id="toast"></div>
+
+  <script type="module" src="web/app.js"></script>
+</body>
+</html>
