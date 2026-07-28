@@ -1,0 +1,39 @@
+# ffmpeg is ~145 MB, well over GitHub's per-file limit.
+# Get it back with: python tools/get_ffmpeg.py
+tools/ffmpeg.exe
+tools/ffprobe.exe
+
+# Build output
+build/
+dist/
+native/build/
+
+# raylib and the json header, fetched by tools/get_libraries.py
+vendor/
+
+# Python is only used by the helper scripts in tools/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Rendered videos land in the root by default
+/*.mp4
+/*.webm
+
+# The web build needs its mp3s, so only ignore stray ones
+/*.mp3
+
+# Personal artwork and the projects built around it stay on this machine.
+# The app still finds them locally; they are simply not published.
+assets/images/custom/
+assets/sounds/custom/
+assets/manifest.local.json
+projects/*
+!projects/default.json
+
+# Editors and OS
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store

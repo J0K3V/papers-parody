@@ -1,0 +1,35 @@
+{
+  "version": 2,
+  "scenes": [
+    {
+      "image": "assets/images/default/Arrested.png",
+      "text": "The Ministry of Income has discovered an anomaly in your earnings.",
+      "sound": null
+    },
+    {
+      "image": "assets/images/default/JailDoor.png",
+      "text": "You are under arrest pending a full audit of your recent activities.",
+      "sound": null
+    },
+    {
+      "image": "assets/images/default/JailNear.png",
+      "text": "Your family will likewise be held for questioning.",
+      "sound": null
+    },
+    {
+      "image": "assets/images/default/JailFar.png",
+      "text": "The border will remain open under a replacement inspector.",
+      "sound": null
+    },
+    {
+      "image": "assets/images/default/Arstotzka.png",
+      "text": "Glory to Arstotzka.",
+      "sound": null,
+      "align": "center"
+    }
+  ],
+  "soundtrack": "bad ending",
+  "fit": "contain",
+  "typing": "normal",
+  "output": "my-parody.mp4"
+}

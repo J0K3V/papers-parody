@@ -1,0 +1,35 @@
+// What Windows shows for the executable: the icon in Explorer, the one on the
+// window and its task bar button, and the details on the properties page.
+//
+// Two entries, one file. The numbered one is what Explorer shows for the exe.
+// The named one is what GLFW - the window layer raylib sits on - looks for when
+// it registers the window class: it asks for a resource called GLFW_ICON, and
+// falls back to the blank Windows default when there is none. That is why the
+// task bar button had a generic icon while Explorer had the right one.
+
+1 ICON "app.ico"
+GLFW_ICON ICON "app.ico"
+
+1 VERSIONINFO
+FILEVERSION     1, 0, 0, 0
+PRODUCTVERSION  1, 0, 0, 0
+FILEOS          0x4L
+FILETYPE        0x1L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "FileDescription", "Parody, Please - scene editor"
+            VALUE "FileVersion",     "1.0"
+            VALUE "InternalName",    "ParodyPlease"
+            VALUE "OriginalFilename", "ParodyPlease.exe"
+            VALUE "ProductName",     "Parody, Please"
+            VALUE "ProductVersion",  "1.0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
